@@ -3,6 +3,7 @@ package app.isolvetech.ageinminutes
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,13 +35,19 @@ class MainActivity : AppCompatActivity() {
             val theDate = sdf.parse(selectedDate)
 
             val ageInMinutes = theDate?.time?.div(60000)
+            val ageInDays = ageInMinutes?.div(1440)
+            Log.d("MY_TAG", ageInMinutes.toString())
             val currentDate = sdf.parse(sdf.format(System.currentTimeMillis()))
 
+
             val currentDateToMinutes = currentDate?.time?.div(60000)
+            val currentDateToDays = currentDateToMinutes?.div(1440)
 
             val diffInMinutes = ageInMinutes?.let { currentDateToMinutes?.minus(it) }
+            val diffInDays = ageInDays?.let { currentDateToDays?.minus(it) }
 
-            tvDateMinutes.text = diffInMinutes.toString()
+            //tvDateMinutes.text = diffInMinutes.toString()
+            tvDateMinutes.text = diffInDays.toString()
         }
             , year, month, day)
 
